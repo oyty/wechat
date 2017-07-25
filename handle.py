@@ -12,7 +12,7 @@ class Handle(object):
             web_data = web.data()
             print 'Handle post web data is ', web_data
             rec_msg = receive.parse_xml(web_data)
-            if isinstance(rec_msg, receive.Msg) and rec_msg.msg_type == 'text':
+            if isinstance(rec_msg, receive.Msg) and rec_msg.MsgType == 'text':
                 toUser = rec_msg.FromUserName
                 fromUser = rec_msg.ToUserName
                 content = "test"
