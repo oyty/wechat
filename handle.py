@@ -17,6 +17,7 @@ class Handle(object):
                 fromUser = rec_msg.ToUserName
                 content = "test"
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
+                print 'Prepare to send data ...'
                 return replyMsg.send()
             else:
                 print "暂且不处理"
