@@ -5,17 +5,24 @@ import hashlib
 import web
 import receive
 import reply
-import app
 
+import MySQLdb as mdb
 
 class Handle(object):
+    def __init__(self):
+        try:
+            self.con = mdb.connect('localhost', 'root', '892968', 'oyty')
+        finally:
+            if self.con:
+                self.con.close()
+
     def POST(self):
         try:
             webData = web.data()
             print "Handle Post webdata is \n", webData  # 后台打日志
             recMsg = receive.parse_xml(webData)
             print '\n rece_msg----', recMsg.Content
-            cur = app.con.cursor()
+            cur = self.con.cursor()
             cur.execute("SELECT * FROM POEM WHERE poem LIKE '%" + recMsg.Content + "%'")
             poems = cur.fetchall()
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
