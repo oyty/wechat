@@ -31,7 +31,7 @@ class Handle(object):
                     print '2'
                     fromUser = recMsg.ToUserName
                     content = poem_content
-                    print '3'
+                    print content
                     replyMsg = reply.TextMsg(toUser, fromUser, content)
                     print '4'
                     return replyMsg.send()
