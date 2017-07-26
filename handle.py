@@ -10,11 +10,7 @@ import MySQLdb as mdb
 
 class Handle(object):
     def __init__(self):
-        try:
-            self.con = mdb.connect(host='localhost', user='root', passwd='892968', db='oyty', charset='utf8')
-        finally:
-            if self.con:
-                self.con.close()
+        pass
 
     def POST(self):
         try:
@@ -22,19 +18,27 @@ class Handle(object):
             print "Handle Post webdata is \n", webData  # 后台打日志
             recMsg = receive.parse_xml(webData)
             print '\n rece_msg----', recMsg.Content
-            cur = self.con.cursor()
-            cur.execute("SELECT * FROM poem WHERE poem LIKE '%" + recMsg.Content + "%'")
-            poems = cur.fetchall()
-            print poems[0][1]
-            if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
-                toUser = recMsg.FromUserName
-                fromUser = recMsg.ToUserName
-                content = poems[0][1]
-                replyMsg = reply.TextMsg(toUser, fromUser, content)
-                return replyMsg.send()
-            else:
-                print "暂且不处理"
-                return "success"
+            con = None
+            try:
+                con = mdb.connect(host='localhost', user='root', passwd='892968', db='oyty', charset='utf8')
+                cur = con.cursor()
+                cur.execute("SELECT * FROM poem WHERE poem LIKE '%" + recMsg.Content + "%'")
+                poems = cur.fetchall()
+                print poems[0][1]
+                if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
+                    toUser = recMsg.FromUserName
+                    fromUser = recMsg.ToUserName
+                    content = poems[0][1]
+                    replyMsg = reply.TextMsg(toUser, fromUser, content)
+                    return replyMsg.send()
+                else:
+                    print "暂且不处理"
+                    return "success"
+            finally:
+                if con:
+                    con.close()
+
+
         except Exception, Argment:
             return Argment
 
