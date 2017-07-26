@@ -5,6 +5,7 @@ import hashlib
 import web
 import receive
 import reply
+import app
 
 
 class Handle(object):
@@ -13,11 +14,14 @@ class Handle(object):
             webData = web.data()
             print "Handle Post webdata is \n", webData  # 后台打日志
             recMsg = receive.parse_xml(webData)
-            print '\n rece_msg----', recMsg
+            print '\n rece_msg----', recMsg.Content
+            cur = app.con.cursor()
+            cur.execute("SELECT * FROM POEM WHERE poem LIKE '%" + recMsg.Content + "%'")
+            poems = cur.fetchall()
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
-                content = "<a href=\"http://so.gushiwen.org/mingju/ju_224.aspx\">test</a>"
+                content = poems[0][0]
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 return replyMsg.send()
             else:
