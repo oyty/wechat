@@ -25,6 +25,7 @@ class Handle(object):
             cur = self.con.cursor()
             cur.execute("SELECT * FROM poem WHERE poem LIKE '%" + recMsg.Content + "%'")
             poems = cur.fetchall()
+            print poems[0][1]
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName

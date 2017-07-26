@@ -10,7 +10,7 @@ try:
 
     cur = con.cursor()
     content = '明月'
-    cur.execute("SELECT * FROM poem WHERE poem LIKE '%明月%'")
+    cur.execute("SELECT * FROM poem WHERE poem LIKE '%" + content + "%'")
     poems = cur.fetchall()
     print poems[0][1]
 
