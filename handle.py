@@ -23,7 +23,7 @@ class Handle(object):
             recMsg = receive.parse_xml(webData)
             print '\n rece_msg----', recMsg.Content
             cur = self.con.cursor()
-            cur.execute("SELECT * FROM POEM WHERE poem LIKE '%" + recMsg.Content + "%'")
+            cur.execute("SELECT * FROM poem WHERE poem LIKE '%" + recMsg.Content + "%'")
             poems = cur.fetchall()
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
                 toUser = recMsg.FromUserName
