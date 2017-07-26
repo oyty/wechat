@@ -11,7 +11,7 @@ import MySQLdb as mdb
 class Handle(object):
     def __init__(self):
         try:
-            self.con = mdb.connect('localhost', 'root', '892968', 'oyty')
+            self.con = mdb.connect(host='localhost', user='root', passwd='892968', db='oyty', charset='utf8')
         finally:
             if self.con:
                 self.con.close()
@@ -28,7 +28,7 @@ class Handle(object):
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
-                content = poems[0][0]
+                content = poems[0][1]
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 return replyMsg.send()
             else:
