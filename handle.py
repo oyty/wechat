@@ -26,10 +26,14 @@ class Handle(object):
                 poems = cur.fetchall()
                 poem_content = poems[0][1]
                 if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
+                    print '1'
                     toUser = recMsg.FromUserName
+                    print '2'
                     fromUser = recMsg.ToUserName
                     content = poem_content
+                    print '3'
                     replyMsg = reply.TextMsg(toUser, fromUser, content)
+                    print '4'
                     return replyMsg.send()
                 else:
                     print "暂且不处理"
