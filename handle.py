@@ -33,7 +33,7 @@ class Handle(object):
                     content = poem_content
                     print content
                     replyMsg = reply.TextMsg(toUser, fromUser, content)
-                    print '4'
+                    print replyMsg
                     return replyMsg.send()
                 else:
                     print "暂且不处理"
