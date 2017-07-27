@@ -30,7 +30,7 @@ class Handle(object):
                     toUser = recMsg.FromUserName
                     print '2'
                     fromUser = recMsg.ToUserName
-                    content = "海上生明月，天涯共此时"
+                    content = "test"
                     print content
                     replyMsg = reply.TextMsg(toUser, fromUser, content)
                     print receive.parse_xml(replyMsg)
