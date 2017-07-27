@@ -28,8 +28,9 @@ class Handle(object):
                 for i in range(0, 10):
                     poetry = poems[i][1] + "\n" + '<a href="' + poems[i][3] + '">' + poems[i][2] + "</a>\n\n"
                     content = content + poetry
+                if len(poems) > 10:
+                    content += "最多匹配10条，可修改关键字，提高查询精度"
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
-                content = poems[0][1]
                 return replyMsg.send()
             else:
                 print "暂且不处理"
