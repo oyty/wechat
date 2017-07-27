@@ -21,8 +21,8 @@ class Handle(object):
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
-                print poems[0][1].decode('utf-8')
-                content = poems[0][1].decode('utf-8')
+                print poems[0][1]
+                content = poems[0][1]
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 return replyMsg.send()
             else:
