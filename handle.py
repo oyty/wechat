@@ -21,11 +21,13 @@ class Handle(object):
             cur = con.cursor()
             cur.execute("SELECT * FROM poem WHERE poem LIKE '%" + recMsg.Content + "%'")
             poems = cur.fetchall()
+            content = ''
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
-                print poems[0][1]
-                content = poems[0][1]
+                for i in range(0, len(poems)):
+                    poetry = poems[i][1] + "\n" + "<a href='" + poems[0][3] + "'>" + poems[i][2] + "</a>\n\n"
+                    content = content + poetry
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 content = poems[0][1]
                 return replyMsg.send()
