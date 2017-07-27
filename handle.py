@@ -26,8 +26,10 @@ class Handle(object):
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
                 for i in range(0, len(poems)):
-                    poetry = poems[i][1] + "\n" + "<a href='" + poems[0][3] + "'>" + poems[i][2] + "</a>\n\n"
+                    poetry = poems[i][1] + "\n" + "<a href='" + poems[i][3] + "'>" + poems[i][2] + "</a>\n\n"
                     content = content + poetry
+                    print poetry
+                print content
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 content = poems[0][1]
                 return replyMsg.send()
