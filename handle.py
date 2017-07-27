@@ -32,7 +32,7 @@ class Handle(object):
                     fromUser = recMsg.ToUserName
                     content = poem_content
                     print content
-                    replyMsg = reply.TextMsg(toUser, fromUser, content)
+                    replyMsg = reply.TextMsg(toUser, fromUser, "海上生明月，天涯共此时")
                     print receive.parse_xml(replyMsg)
                     return replyMsg.send()
                 else:
