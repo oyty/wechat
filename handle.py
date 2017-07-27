@@ -6,11 +6,14 @@ import web
 import receive
 import reply
 import MySQLdb as mdb
+import sys
 
 class Handle(object):
     def POST(self):
         con = None
         try:
+            reload(sys)
+            sys.setdefaultencoding('utf-8')
             webData = web.data()
             print "Handle Post webdata is ", webData   #后台打日志
             recMsg = receive.parse_xml(webData)
@@ -24,6 +27,7 @@ class Handle(object):
                 print poems[0][1]
                 content = poems[0][1]
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
+                content = poems[0][1]
                 return replyMsg.send()
             else:
                 print "暂且不处理"
