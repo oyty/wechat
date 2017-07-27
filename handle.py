@@ -17,11 +17,26 @@ class Handle(object):
             webData = web.data()
             print "Handle Post webdata is ", webData   #后台打日志
             recMsg = receive.parse_xml(webData)
+
+            if len(recMsg.Content) < 2:
+                content = u"请输入至少两位关键词"
+                toUser = recMsg.FromUserName
+                fromUser = recMsg.ToUserName
+                replyMsg = reply.TextMsg(toUser, fromUser, content)
+                return replyMsg.send()
+
             con = mdb.connect(host='localhost', user='root', passwd='892968', db='oyty', charset='utf8')
             cur = con.cursor()
             cur.execute("SELECT * FROM poem WHERE poem LIKE '%" + recMsg.Content + "%'")
             poems = cur.fetchall()
             content = ''
+            if len(poems) == 0:
+                content = u"未查询到相关诗文，请重新输入"
+                toUser = recMsg.FromUserName
+                fromUser = recMsg.ToUserName
+                replyMsg = reply.TextMsg(toUser, fromUser, content)
+                return replyMsg.send()
+
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
@@ -34,7 +49,7 @@ class Handle(object):
                 return replyMsg.send()
             if isinstance(recMsg, receive.EventMsg):
                 if recMsg.Event == 'CLICK':
-                    if recMsg.Eventkey == 'mpGuide':
+                    if recMsg.Eventkey == 'queryRule':
                         content = u"欢迎使用~\n1关键词  搜索诗词\n2诗人名  搜索诗人的诗词".encode('utf-8')
                         toUser = recMsg.FromUserName
                         fromUser = recMsg.ToUserName
