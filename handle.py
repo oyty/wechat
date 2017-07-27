@@ -29,9 +29,17 @@ class Handle(object):
                     poetry = poems[i][1] + "\n" + '<a href="' + poems[i][3] + '">' + poems[i][2] + "</a>\n\n"
                     content = content + poetry
                 if len(poems) > 10:
-                    content += '<font color="#00FF00">最多匹配10条，可修改关键字，提高查询精度</font>'
+                    content += "最多匹配10条，可修改关键字，提高查询精度"
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 return replyMsg.send()
+            if isinstance(recMsg, receive.EventMsg):
+                if recMsg.Event == 'CLICK':
+                    if recMsg.Eventkey == 'mpGuide':
+                        content = u"欢迎使用~\n1关键词  搜索诗词\n2诗人名  搜索诗人的诗词".encode('utf-8')
+                        toUser = recMsg.FromUserName
+                        fromUser = recMsg.ToUserName
+                        replyMsg = reply.TextMsg(toUser, fromUser, content)
+                        return replyMsg.send()
             else:
                 print "暂且不处理"
                 return "success"
