@@ -29,7 +29,7 @@ class Handle(object):
                     poetry = poems[i][1] + "\n" + '<a href="' + poems[i][3] + '">' + poems[i][2] + "</a>\n\n"
                     content = content + poetry
                 if len(poems) > 10:
-                    content += "最多匹配10条，可修改关键字，提高查询精度"
+                    content += '<font color="#00FF00">最多匹配10条，可修改关键字，提高查询精度</font>'
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 return replyMsg.send()
             else:
