@@ -19,7 +19,7 @@ class Handle(object):
             recMsg = receive.parse_xml(webData)
             con = mdb.connect(host='localhost', user='root', passwd='892968', db='oyty', charset='utf8')
             cur = con.cursor()
-            cur.execute("SELECT * FROM poem WHERE poem LIKE '%" + recMsg.Content + "%' LIMIT 1, 15")
+            cur.execute("SELECT * FROM poem WHERE poem LIKE '%" + recMsg.Content + "%' LIMIT 1, 12")
             poems = cur.fetchall()
             content = ''
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
@@ -28,8 +28,6 @@ class Handle(object):
                 for i in range(0, len(poems)):
                     poetry = poems[i][1] + "\n" + '<a href="' + poems[i][3] + '">' + poems[i][2] + "</a>\n\n"
                     content = content + poetry
-                    print poetry
-                print content
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 content = poems[0][1]
                 return replyMsg.send()
