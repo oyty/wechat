@@ -18,7 +18,7 @@ class Handle(object):
             print "Handle Post webdata is ", webData   #后台打日志
             recMsg = receive.parse_xml(webData)
 
-            if len(recMsg.Content) < 2:
+            if len(recMsg.Content.decode('utf-8')) < 2:
                 content = u"请输入至少两位关键词"
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
