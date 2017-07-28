@@ -9,8 +9,10 @@ import MySQLdb as mdb
 import sys
 
 class Handle(object):
+    def __init__(self):
+        self.con = mdb.connect(host='localhost', user='root', passwd='892968', db='oyty', charset='utf8')
+
     def POST(self):
-        con = None
         try:
             reload(sys)
             sys.setdefaultencoding('utf-8')
@@ -25,8 +27,7 @@ class Handle(object):
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 return replyMsg.send()
 
-            con = mdb.connect(host='localhost', user='root', passwd='892968', db='oyty', charset='utf8')
-            cur = con.cursor()
+            cur = self.con.cursor()
             cur.execute("SELECT * FROM poem WHERE poem LIKE '%" + recMsg.Content + "%' LIMIT 1, 11")
             poems = cur.fetchall()
             content = ''
@@ -59,8 +60,8 @@ class Handle(object):
                 print "暂且不处理"
                 return "success"
         except Exception, Argment:
-            if con:
-                con.close()
+            if self.con:
+                self.con.close()
             return Argment
 
     def GET(self):
